@@ -30,13 +30,18 @@ public class CriarProdutoAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
 
-            List<Estabelecimento> estabelecimentos = EstabelecimentoDAO.getInstance().getAll();
-            request.setAttribute("estabelecimentos", estabelecimentos);
+            buscarListaEstabelecimentos(request, response);
 
             request.getRequestDispatcher("cadastrarProduto.jsp").include(request, response);
 
         } catch (ClassNotFoundException | ServletException | SQLException ex) {
             Logger.getLogger(CriarProdutoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void buscarListaEstabelecimentos(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ClassNotFoundException, ServletException, IOException {
+        List<Estabelecimento> estabelecimentos = EstabelecimentoDAO.getInstance().getAll();
+        request.setAttribute("estabelecimentos", estabelecimentos);
     }
 }

@@ -31,17 +31,26 @@ public class CriarPedidoAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-
-            List<Cliente> clientes = ClienteDAO.getInstance().getAll();
-            request.setAttribute("clientes", clientes);
-
-            List<Estabelecimento> estabelecimentos = EstabelecimentoDAO.getInstance().getAll();
-            request.setAttribute("estabelecimentos", estabelecimentos);
+            
+            buscarListaClientes(request, response);
+            buscarListaEstabelecimentos(request, response);
 
             request.getRequestDispatcher("cadastrarPedido.jsp").include(request, response);
 
         } catch (SQLException | ClassNotFoundException | ServletException ex) {
             Logger.getLogger(CriarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void buscarListaClientes(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ClassNotFoundException, ServletException, IOException {
+        List<Cliente> clientes = ClienteDAO.getInstance().getAll();
+        request.setAttribute("clientes", clientes);
+    }
+
+    private void buscarListaEstabelecimentos(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ClassNotFoundException, ServletException, IOException {
+        List<Estabelecimento> estabelecimentos = EstabelecimentoDAO.getInstance().getAll();
+        request.setAttribute("estabelecimentos", estabelecimentos);
     }
 }

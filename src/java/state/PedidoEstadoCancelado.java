@@ -1,7 +1,5 @@
 package state;
 
-import state.PedidoEstado;
-import model.Pedido;
 import model.Pedido;
 
 /*

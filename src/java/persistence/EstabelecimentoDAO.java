@@ -51,7 +51,7 @@ public class EstabelecimentoDAO {
         Statement st = null;
         ResultSet result = null;
 
-        List<Estabelecimento> estabelecimentos = new ArrayList<Estabelecimento>();
+        List<Estabelecimento> estabelecimentos = new ArrayList<>();
 
         try {
             conn = DataBaseLocator.getInsLocator().getConnection();
