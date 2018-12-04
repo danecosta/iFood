@@ -30,8 +30,8 @@ public class CancelarPedidoAction implements Action {
         try {
             Pedido pedido = PedidoDAO.getInstance().obterPorId(codPedido);
             pedido.cancelarPedido();
-            PedidoDAO.getInstance().atualizarEstado(pedido);
-            
+            PedidoDAO.getInstance().atualizar(pedido, "estado");
+
             buscarListaPedidos(request, response);
 
         } catch (SQLException | ClassNotFoundException | ServletException ex) {

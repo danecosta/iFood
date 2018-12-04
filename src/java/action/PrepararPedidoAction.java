@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Pedido;
 import persistence.PedidoDAO;
-import state.PedidoEstadoEmPreparo;
 
 /**
  *
@@ -31,7 +30,7 @@ public class PrepararPedidoAction implements Action {
         try {
             Pedido pedido = PedidoDAO.getInstance().obterPorId(codPedido);
             pedido.prepararPedido();
-            PedidoDAO.getInstance().atualizarEstado(pedido);
+            PedidoDAO.getInstance().atualizar(pedido, "estado");
 
             buscarListaPedidos(request, response);
 

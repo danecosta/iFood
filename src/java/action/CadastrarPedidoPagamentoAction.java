@@ -28,7 +28,7 @@ public class CadastrarPedidoPagamentoAction implements Action {
 
         try {
             Pedido pedido = PedidoDAO.getInstance().obterPorId(codPedido);
-            PedidoDAO.getInstance().atualizarPagamento(pedido);
+            PedidoDAO.getInstance().atualizar(pedido, "pagamento");
 
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CadastrarPedidoPagamentoAction.class.getName()).log(Level.SEVERE, null, ex);

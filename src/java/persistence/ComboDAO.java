@@ -28,10 +28,6 @@ public class ComboDAO {
     public ComboDAO() {
     }
 
-    public void salvar(Combo combo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public List<Combo> getAll() throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
@@ -56,6 +52,24 @@ public class ComboDAO {
         }
 
         return combos;
+    }
+
+    public void salvar(Combo combo) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        Statement st = null;
+
+        try {
+            conn = DataBaseLocator.getInsLocator().getConnection();
+            st = conn.createStatement();
+            st.execute("insert into combo(codigo, descricao)"
+                    + " values ('" + combo.getCodCombo()
+                    + " values ('" + combo.getDescricao()
+                    + "')");
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            closeResources(st, conn);
+        }
     }
 
     private void closeResources(Statement st, Connection conn) {

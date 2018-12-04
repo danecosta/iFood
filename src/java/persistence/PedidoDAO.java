@@ -77,15 +77,19 @@ public class PedidoDAO {
         }
     }
 
-    public void atualizarEstado(Pedido pedido) throws SQLException, ClassNotFoundException {
+    public void atualizar(Pedido pedido, String campo) throws ClassNotFoundException, SQLException {
         Connection conn = null;
         Statement st = null;
 
         try {
             conn = DataBaseLocator.getInsLocator().getConnection();
             st = conn.createStatement();
-            st.execute("update pedido set estado= '" + pedido.getEstado()
-                    + "' where codigo='" + pedido.getCodPedido() + "'");
+
+            if (campo.equals("estado")) {
+                atualizarEstado(pedido, st);
+            } else if (campo.equals("pagamento")) {
+                atualizarPagamento(pedido, st);
+            }
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -93,20 +97,14 @@ public class PedidoDAO {
         }
     }
 
-    public void atualizarPagamento(Pedido pedido) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
+    private void atualizarEstado(Pedido pedido, Statement st) throws SQLException, ClassNotFoundException {
+        st.execute("update pedido set estado= '" + pedido.getEstado()
+                + "' where codigo='" + pedido.getCodPedido() + "'");
+    }
 
-        try {
-            conn = DataBaseLocator.getInsLocator().getConnection();
-            st = conn.createStatement();
-            st.execute("update pedido set codPagamento= '" + pedido.getCodPagamento()
-                    + "' where codigo='" + pedido.getCodPedido() + "'");
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            closeResources(st, conn);
-        }
+    private void atualizarPagamento(Pedido pedido, Statement st) throws SQLException, ClassNotFoundException {
+        st.execute("update pedido set codPagamento= '" + pedido.getCodPagamento()
+                + "' where codigo='" + pedido.getCodPedido() + "'");
     }
 
     public List<Pedido> getAll() throws SQLException, ClassNotFoundException {

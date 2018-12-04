@@ -30,7 +30,7 @@ public class EntregarPedidoAction implements Action {
         try {
             Pedido pedido = PedidoDAO.getInstance().obterPorId(codPedido);
             pedido.entregarPedido();
-            PedidoDAO.getInstance().atualizarEstado(pedido);
+            PedidoDAO.getInstance().atualizar(pedido, "estado");
 
             buscarListaPedidos(request, response);
 

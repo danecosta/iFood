@@ -7,6 +7,9 @@ package action;
 
 import controller.Action;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Combo;
@@ -23,9 +26,13 @@ public class CadastrarComboAction implements Action {
         int codCombo = Integer.parseInt(request.getParameter("textCodigo"));
         String descricao = request.getParameter("textDescricao");
         String produtos = request.getParameter("textCodigoProduto");
-        
-        Combo combo = new Combo(descricao);
-        ComboDAO.getInstance().salvar(combo);
+
+        try {
+            Combo combo = new Combo(descricao);
+            ComboDAO.getInstance().salvar(combo);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(CadastrarComboAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
         response.sendRedirect("listarCombo.jsp");
     }
 
