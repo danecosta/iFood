@@ -22,37 +22,36 @@ import persistence.ProdutoDAO;
  * @author daniela.costa
  */
 public class CadastrarProdutoAction implements Action {
-    
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int codProduto = Integer.parseInt(request.getParameter("textCodigo"));
         String descricao = request.getParameter("textDescricao");
         String preco = request.getParameter("textPreco");
         int codEstabelecimento = Integer.parseInt(request.getParameter("textCodigoEstabelecimento"));
-        
+
         if (descricao.equals("") || preco.equals("")) {
             response.sendRedirect("index.jsp");
         } else {
             try {
-                
                 Produto produto = new Produto();
                 produto.setCodProduto(codProduto).setDescricao(descricao).setPreco(preco).setCodEstabelecimento(codEstabelecimento);
-                ProdutoDAO.getInstance().save(produto);
-                
+                ProdutoDAO.getInstance().salvar(produto);
+
                 buscarListaProdutos(request, response);
-                
+
+                request.getRequestDispatcher("listarProduto.jsp").include(request, response);
+
             } catch (SQLException | ClassNotFoundException | ServletException ex) {
                 Logger.getLogger(CadastrarProdutoAction.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     private void buscarListaProdutos(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ClassNotFoundException, ServletException, IOException {
         List<Produto> produtos = ProdutoDAO.getInstance().getAll();
-        
         request.setAttribute("produtos", produtos);
-        request.getRequestDispatcher("listarProduto.jsp").include(request, response);
     }
-    
+
 }

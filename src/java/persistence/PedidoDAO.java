@@ -5,6 +5,8 @@
  */
 package persistence;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -77,7 +79,7 @@ public class PedidoDAO {
         }
     }
 
-    public void atualizar(Pedido pedido, String campo) throws ClassNotFoundException, SQLException {
+    public void atualizar(Pedido pedido, String campo) throws ClassNotFoundException, SQLException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Connection conn = null;
         Statement st = null;
 
@@ -85,26 +87,17 @@ public class PedidoDAO {
             conn = DataBaseLocator.getInsLocator().getConnection();
             st = conn.createStatement();
 
-            if (campo.equals("estado")) {
-                atualizarEstado(pedido, st);
-            } else if (campo.equals("pagamento")) {
-                atualizarPagamento(pedido, st);
-            }
+            Object objeto = pedido;
+            Class classe = Class.forName("model.Pedido");
+            Method metodo = classe.getMethod("get" + campo);
+            st.execute("update pedido set " + campo + "= '" + metodo.invoke(objeto)
+                    + "' where codigo='" + pedido.getCodPedido() + "'");
+
         } catch (SQLException e) {
             throw e;
         } finally {
             closeResources(st, conn);
         }
-    }
-
-    private void atualizarEstado(Pedido pedido, Statement st) throws SQLException, ClassNotFoundException {
-        st.execute("update pedido set estado= '" + pedido.getEstado()
-                + "' where codigo='" + pedido.getCodPedido() + "'");
-    }
-
-    private void atualizarPagamento(Pedido pedido, Statement st) throws SQLException, ClassNotFoundException {
-        st.execute("update pedido set codPagamento= '" + pedido.getCodPagamento()
-                + "' where codigo='" + pedido.getCodPedido() + "'");
     }
 
     public List<Pedido> getAll() throws SQLException, ClassNotFoundException {

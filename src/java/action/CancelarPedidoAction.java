@@ -7,6 +7,7 @@ package action;
 
 import controller.Action;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +35,9 @@ public class CancelarPedidoAction implements Action {
 
             buscarListaPedidos(request, response);
 
-        } catch (SQLException | ClassNotFoundException | ServletException ex) {
+            request.getRequestDispatcher("listarPedido.jsp").include(request, response);
+
+        } catch (SQLException | ClassNotFoundException | ServletException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(CancelarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -43,7 +46,6 @@ public class CancelarPedidoAction implements Action {
             throws SQLException, ClassNotFoundException, ServletException, IOException {
         List<Pedido> pedidos = PedidoDAO.getInstance().getAll();
         request.setAttribute("pedidos", pedidos);
-        request.getRequestDispatcher("listarPedido.jsp").include(request, response);
     }
 
 }

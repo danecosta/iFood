@@ -27,18 +27,15 @@ public class CadastrarEstabelecimentoAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int codEstabelecimento = Integer.parseInt(request.getParameter("textCodigo"));
         String nome = request.getParameter("textNome");
-
         try {
             Estabelecimento estabelecimento = new Estabelecimento(codEstabelecimento, nome);
             EstabelecimentoDAO.getInstance().salvar(estabelecimento);
 
             buscarListaEstabelecimentos(request, response);
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastrarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastrarPedidoProdutoAction.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServletException ex) {
+            request.getRequestDispatcher("listarEstabelecimento.jsp").include(request, response);
+
+        } catch (SQLException | ClassNotFoundException | ServletException ex) {
             Logger.getLogger(CadastrarEstabelecimentoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -47,7 +44,6 @@ public class CadastrarEstabelecimentoAction implements Action {
             throws SQLException, ClassNotFoundException, ServletException, IOException {
         List<Estabelecimento> estabelecimentos = EstabelecimentoDAO.getInstance().getAll();
         request.setAttribute("estabelecimentos", estabelecimentos);
-        request.getRequestDispatcher("listarEstabelecimento.jsp").include(request, response);
     }
 
 }

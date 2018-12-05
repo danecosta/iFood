@@ -28,7 +28,7 @@ public class ClienteDAO {
     public ClienteDAO() {
     }
 
-    public void save(Cliente cliente) throws SQLException, ClassNotFoundException {
+    public void salvar(Cliente cliente) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
 

@@ -36,9 +36,9 @@ public class CadastrarPedidoProdutoAction implements Action {
 
             popularListaTiposPagamento(request, response);
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastrarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException | ServletException ex) {
+            request.getRequestDispatcher("cadastrarTipoPagamentoPedido.jsp").include(request, response);
+
+        } catch (ClassNotFoundException | SQLException | ServletException ex) {
             Logger.getLogger(CadastrarPedidoProdutoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -49,6 +49,5 @@ public class CadastrarPedidoProdutoAction implements Action {
         tiposPagamento.add("Dinheiro");
         tiposPagamento.add("Cartão de Crédito");
         request.setAttribute("tiposPagamento", tiposPagamento);
-        request.getRequestDispatcher("cadastrarTipoPagamentoPedido.jsp").include(request, response);
     }
 }

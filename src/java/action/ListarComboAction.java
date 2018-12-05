@@ -22,10 +22,6 @@ public class ListarComboAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-//            List<Combo> combos = ComboDAO.getInstance().getAll();
-//
-//            request.setAttribute("combos", combos);
-
             request.getRequestDispatcher("listarCombo.jsp").include(request, response);
 
         } catch (ServletException ex) {

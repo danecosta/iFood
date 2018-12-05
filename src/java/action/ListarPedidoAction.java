@@ -32,11 +32,7 @@ public class ListarPedidoAction implements Action {
 
             request.getRequestDispatcher("listarPedido.jsp").include(request, response);
 
-        } catch (ServletException ex) {
-            Logger.getLogger(ListarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (ServletException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ListarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

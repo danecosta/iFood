@@ -7,6 +7,7 @@ package action;
 
 import controller.Action;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +29,9 @@ public class CadastrarPedidoPagamentoAction implements Action {
 
         try {
             Pedido pedido = PedidoDAO.getInstance().obterPorId(codPedido);
-            PedidoDAO.getInstance().atualizar(pedido, "pagamento");
+            PedidoDAO.getInstance().atualizar(pedido, "CodPagamento");
 
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(CadastrarPedidoPagamentoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
         response.sendRedirect("listarPedido.jsp");

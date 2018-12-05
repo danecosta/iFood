@@ -39,6 +39,8 @@ public class CadastrarPedidoAction implements Action {
             request.setAttribute("codPedido", codPedido);
             buscarListaProdutos(request, response);
 
+            request.getRequestDispatcher("cadastrarProdutosPedido.jsp").include(request, response);
+
         } catch (SQLException | ClassNotFoundException | ServletException ex) {
             Logger.getLogger(CadastrarPedidoAction.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,8 +50,6 @@ public class CadastrarPedidoAction implements Action {
             throws SQLException, ClassNotFoundException, ServletException, IOException {
         List<Produto> produtos = ProdutoDAO.getInstance().getAll();
         request.setAttribute("produtos", produtos);
-
-        request.getRequestDispatcher("cadastrarProdutosPedido.jsp").include(request, response);
     }
 
 }

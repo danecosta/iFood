@@ -28,7 +28,7 @@ public class ProdutoDAO {
     public ProdutoDAO() {
     }
 
-    public void save(Produto produto) throws SQLException, ClassNotFoundException {
+    public void salvar(Produto produto) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
 

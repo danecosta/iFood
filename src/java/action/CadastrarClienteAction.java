@@ -32,18 +32,16 @@ public class CadastrarClienteAction implements Action {
         String bairro = request.getParameter("textBairro");
         String cep = request.getParameter("textCep");
 
-        if (nome.equals("") || rua.equals("") || numero.equals("") || bairro.equals("") || cep.equals("")) {
-            //response.sendRedirect("index.jsp");
-        } else {
-            try {
-                Cliente cliente = new Cliente(codCliente, nome, rua, numero, bairro, cep);
-                ClienteDAO.getInstance().save(cliente);
+        try {
+            Cliente cliente = new Cliente(codCliente, nome, rua, numero, bairro, cep);
+            ClienteDAO.getInstance().salvar(cliente);
 
-                buscarListaClientes(request, response);
+            buscarListaClientes(request, response);
 
-            } catch (SQLException | ClassNotFoundException | ServletException ex) {
-                Logger.getLogger(CadastrarClienteAction.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            request.getRequestDispatcher("listarCliente.jsp").include(request, response);
+
+        } catch (SQLException | ClassNotFoundException | ServletException ex) {
+            Logger.getLogger(CadastrarClienteAction.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -51,7 +49,6 @@ public class CadastrarClienteAction implements Action {
             throws SQLException, ClassNotFoundException, ServletException, IOException {
         List<Cliente> clientes = ClienteDAO.getInstance().getAll();
         request.setAttribute("clientes", clientes);
-        request.getRequestDispatcher("listarCliente.jsp").include(request, response);
     }
 
 }
